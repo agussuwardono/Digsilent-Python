@@ -1,0 +1,42 @@
+import sys
+import os
+sys.path.append(r"C:\Program Files\DIgSILENT\PowerFactory 2022\Python\3.9")
+import powerfactory as pf
+from PIL import Image
+import matplotlib.pyplot as plt
+import pandas as pd
+from tqdm import tqdm
+import time
+import numpy as np
+app=pf.GetApplication()
+#-----------------------------------------------------------------------------------------------------------
+app.Show()
+#-----------------------------------------------------------------------------------------------------------
+app=pf.GetApplicationExt('LIPIST')
+user = app.GetCurrentUser()
+projects = user.GetContents("3BUS Variation Modified")[0]
+projects.Activate()
+#-----------------------------------------------------------------------------------------------------------
+def check_text_exists(data_object, search_text):
+    return search_text in data_object
+def create2stacubics(x):
+    Terms[x].CreateObject("StaCubic")
+def deletestacubics(cubNOTconnect):
+    for cub in cubNOTconnect:
+        cub.Delete()
+def find_index_of_term(data, search_term):
+    return next((i for i, item in enumerate(data) if search_term in item), None)
+#-----------------------------------------------------------------------------------------------------------
+app.GetFromStudyCase("Comldf").Execute()
+#-----------------------------------------------------------------------------------------------------------
+Lods = app.GetCalcRelevantObjects("ElmLod")
+Lnes = app.GetCalcRelevantObjects("ElmLne")
+Terms = app.GetCalcRelevantObjects("ElmTerm")
+#Reses = app.GetCalcRelevantObjects("ElmRes")
+#Relays = app.GetCalcRelevantObjects("ElmRelay")
+#Areas = app.GetCalcRelevantObjects("ElmArea")
+Cubicss = app.GetCalcRelevantObjects("StaCubic")
+Switches = app.GetCalcRelevantObjects("StaSwitch")
+#Branchs = app.GetCalcRelevantObjects("ElmBranch")
+Syms = app.GetCalcRelevantObjects("ElmSym")
+#app.Hide()
